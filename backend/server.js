@@ -10,6 +10,8 @@ const PORT = 5000;
 
 app.use(express.json());
 
+// Routing
+app.use("/auth", require("./auth.js"))
 
 app.get("/", (req, res) => {
   res.send("Welcome to the Simple Node.js and Express App!");
