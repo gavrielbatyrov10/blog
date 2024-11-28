@@ -1,6 +1,8 @@
 import "../css/Login.css";
+import { BASE_URL } from "../constant/constant";
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -9,8 +11,32 @@ export default function Login() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const baseUrl = BASE_URL;
+    const loginUrl = `${baseUrl}/auth/login`;
+   
+    try {
+      const response = await fetch(loginUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        localStorage.setItem("token", data.token);
+        navigate("/");
+      } else {
+        setError(data.message || "Login failed, please try again.");
+      }
+    } catch (err) {
+      setError("An error occurred, please try again.");
+      console.error(err);
+    }
   };
   return (
     <div>
