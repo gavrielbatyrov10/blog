@@ -8,7 +8,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 router.post("/signup", async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password } = req.body;
+  const role = 'user';
   if (!name || !email || !password || !role) {
     return res.status(400).json({ message: "All fields are required" });
   }
