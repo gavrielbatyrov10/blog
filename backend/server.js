@@ -21,9 +21,6 @@ app.get("/", (req, res) => {
   res.send("Welcome to the Simple Node.js and Express App!");
 });
 
-app.get("/health", (req, res) => {
-  res.json({ status: "OK", timestamp: new Date().toISOString() });
-});
 
 
 app.listen(PORT, () => {

@@ -48,3 +48,24 @@ router.post("/posts", authenticate, async (req, res, next) => {
     next(error);
   }
 });
+
+router.put("/posts/:id", authenticate, async (req, res) => {
+  const { id } = req.params;
+  const { title, description } = req.body;
+  const post = await prisma.post.update({
+    where: { id: id },
+    data: { title: title, description: description },
+  });
+  res.status(200).json(post);
+});
+
+
+router.get("/posts/:id", authenticate, async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const post = await prisma.post.findUnique({ where: { id: parseInt(id) } });
+    res.status(200).json(post);
+  } catch (error) {
+    next(error);
+  }
+});
