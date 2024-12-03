@@ -59,12 +59,39 @@ router.put("/posts/:id", authenticate, async (req, res) => {
   res.status(200).json(post);
 });
 
-
 router.get("/posts/:id", authenticate, async (req, res, next) => {
   try {
     const id = req.params.id;
     const post = await prisma.post.findUnique({ where: { id: parseInt(id) } });
+    if (!post) {
+        const error = new Error("Post not found.");
+        error.status = 404;
+        throw error;
+      }
     res.status(200).json(post);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// delete
+
+router.delete("/posts/:id", authenticate, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const post = await prisma.post.findUnique({ where: { id: parseInt(id) } });
+    if (!post) {
+      const error = new Error("Post not found.");
+      error.status = 404;
+      throw error;
+    }
+    if (post.createdById !== req.user.id) {
+      const error = new Error("You are not authorized to delete this post.");
+      error.status = 403;
+      throw error;
+    }
+    await prisma.post.delete({ where: { id: parseInt(id) } });
+    res.json({"message":"Post has been deleted"});
   } catch (error) {
     next(error);
   }
