@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../css/Signup.css";
-
 import { BASE_URL } from '../constant/constant';
 
 export default function Signup() {
@@ -46,6 +45,7 @@ export default function Signup() {
     <div>
       <div className="signup-container">
         <h2>Create an Account</h2>
+        <img src="./Signup.jpg" alt="" className="signup__img" />
         <form className="signup-form" onSubmit={handleSubmit}>
           <label htmlFor="name">Name</label>
           <input

@@ -44,6 +44,7 @@ export default function Login() {
       <div className="signup-container">
         {" "}
         <h2>Login to Your Account</h2>{" "}
+        <img src="./Login.jpg" alt="" className="signup__img" />
         {error && <div className="error-message">{error}</div>}{" "}
         <form className="signup-form" onSubmit={handleSubmit}>
           {" "}

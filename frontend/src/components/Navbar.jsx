@@ -6,7 +6,10 @@ import "../css/Navbar.css";
 export default function Navbar() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const handleLogout = () => { localStorage.removeItem("token"); navigate("/login"); };
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -14,16 +17,21 @@ export default function Navbar() {
       </div>
       <div className="navbar-right">
         {token ? (
-          <button onClick={handleLogout} className="navbar-link">
-            
-            Logout
-          </button>
+          <>
+            <Link to="/blog" className="navbar-link">
+              blog
+            </Link>
+
+            <button onClick={handleLogout} className="navbar-link--btn">
+              Logout
+            </button>
+          </>
         ) : (
           <>
-            
             <Link to="/login" className="navbar-link">
               Login
             </Link>
+
             <Link to="/signup" className="navbar-link">
               Signup
             </Link>

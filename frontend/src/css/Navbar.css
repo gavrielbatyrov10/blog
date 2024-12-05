@@ -29,6 +29,15 @@
     font-weight: 500;
     transition: color 0.3s;
     }
+
+.navbar-link--btn {
+    background-color: #4CAF50;
+    color: white;
+}    
+.navbar-link--btn:hover {
+    background-color: white;
+    color: #4CAF50;
+}    
     .navbar-link:hover {
     color: #d4d4d4;
     }
