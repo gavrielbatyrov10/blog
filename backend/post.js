@@ -9,12 +9,24 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 // only authenticate users can post
-router.get("/posts", authenticate, async (req, res) => {
-  const posts = await prisma.post.findMany();
-  res.json(posts);
-});
+router.get("/posts", authenticate(["admin","user"]), async (req, res) => {
+    try {
+      const blogs = await prisma.post.findMany({
+        include: {
+          createdBy: {
+            select: { name: true }, 
+          },
+        },
+        orderBy: { createdAt: "desc" }, 
+      });
+  
+      res.status(200).json(blogs);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
 
-router.post("/posts", authenticate, async (req, res, next) => {
+router.post("/posts", authenticate(["admin"]), async (req, res, next) => {
   try {
     const { title, description } = req.body;
     if (!title || typeof title !== "string" || title.trim() === "") {
@@ -49,7 +61,7 @@ router.post("/posts", authenticate, async (req, res, next) => {
   }
 });
 
-router.put("/posts/:id", authenticate, async (req, res) => {
+router.put("/posts/:id", authenticate(["admin"]), async (req, res) => {
   const { id } = req.params;
   const { title, description } = req.body;
   const post = await prisma.post.update({
@@ -59,7 +71,7 @@ router.put("/posts/:id", authenticate, async (req, res) => {
   res.status(200).json(post);
 });
 
-router.get("/posts/:id", authenticate, async (req, res, next) => {
+router.get("/posts/:id", authenticate(["admin", "user"]), async (req, res, next) => {
   try {
     const id = req.params.id;
     const post = await prisma.post.findUnique({ where: { id: parseInt(id) } });
@@ -76,7 +88,7 @@ router.get("/posts/:id", authenticate, async (req, res, next) => {
 
 // delete
 
-router.delete("/posts/:id", authenticate, async (req, res, next) => {
+router.delete("/posts/:id", authenticate(["admin"]), async (req, res, next) => {
   try {
     const { id } = req.params;
     const post = await prisma.post.findUnique({ where: { id: parseInt(id) } });
