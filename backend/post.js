@@ -9,22 +9,22 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 // only authenticate users can post
-router.get("/posts", authenticate(["admin","user"]), async (req, res) => {
-    try {
-      const blogs = await prisma.post.findMany({
-        include: {
-          createdBy: {
-            select: { name: true }, 
-          },
+router.get("/posts", authenticate(["admin", "user"]), async (req, res) => {
+  try {
+    const blogs = await prisma.post.findMany({
+      include: {
+        createdBy: {
+          select: { name: true },
         },
-        orderBy: { createdAt: "desc" }, 
-      });
-  
-      res.status(200).json(blogs);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  });
+      },
+      orderBy: { createdAt: "desc" },
+    });
+
+    res.status(200).json(blogs);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 router.post("/posts", authenticate(["admin"]), async (req, res, next) => {
   try {
@@ -71,20 +71,31 @@ router.put("/posts/:id", authenticate(["admin"]), async (req, res) => {
   res.status(200).json(post);
 });
 
-router.get("/posts/:id", authenticate(["admin", "user"]), async (req, res, next) => {
-  try {
-    const id = req.params.id;
-    const post = await prisma.post.findUnique({ where: { id: parseInt(id) } });
-    if (!post) {
+router.get(
+  "/posts/:id",
+  authenticate(["admin", "user"]),
+  async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      const post = await prisma.post.findUnique({
+        where: { id: parseInt(id) },
+        include: {
+          createdBy: {
+            select: { name: true },
+          },
+        },
+      });
+      if (!post) {
         const error = new Error("Post not found.");
         error.status = 404;
         throw error;
       }
-    res.status(200).json(post);
-  } catch (error) {
-    next(error);
+      res.status(200).json(post);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // delete
 
@@ -103,7 +114,7 @@ router.delete("/posts/:id", authenticate(["admin"]), async (req, res, next) => {
       throw error;
     }
     await prisma.post.delete({ where: { id: parseInt(id) } });
-    res.json({"message":"Post has been deleted"});
+    res.json({ message: "Post has been deleted" });
   } catch (error) {
     next(error);
   }

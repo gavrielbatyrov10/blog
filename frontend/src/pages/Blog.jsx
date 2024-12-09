@@ -35,6 +35,12 @@ export default function Blog() {
     navigate("/post/blog");
   };
 
+  const stripHTML = (html) => {
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = html;
+    return tempDiv.textContent || tempDiv.innerText || "";
+  };
+
   return (
     <div className="blog-listing-container">
       <header className="blog-header">
@@ -52,10 +58,21 @@ export default function Blog() {
               Created by <span>{blog.createdBy.name}</span> on{" "}
               <span>{new Date(blog.createdAt).toLocaleDateString()}</span>
             </p>
-            <div
-              className="blog-description"
-              dangerouslySetInnerHTML={{ __html: blog.description }}
-            ></div>
+            <div className="blog-description">
+              {blog.description.length > 30 ? (
+                <>
+                  {stripHTML(blog.description.substring(0, 30))}...
+                  <span
+                    className="read-more"
+                    onClick={() => navigate(`/blog/${blog.id}`)}
+                  >
+                    Read More
+                  </span>
+                </>
+              ) : (
+                stripHTML(blog.description)
+              )}
+            </div>
           </div>
         ))}
       </div>

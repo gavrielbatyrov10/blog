@@ -146,3 +146,11 @@
     width: 100%;
     height: auto;
   }
+
+  span {
+    color: #007bff;
+  }
+
+.read-more {
+  cursor: pointer;
+}

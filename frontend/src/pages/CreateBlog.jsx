@@ -31,6 +31,7 @@ export default function Createblog() {
 
       if (response.ok) {
         alert("Blog created successfully!");
+        navigate("/blog");
       } else {
         const error = await response.json();
         alert(error.message || "Failed to create the blog.");
