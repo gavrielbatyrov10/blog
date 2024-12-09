@@ -6,13 +6,11 @@ import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { BASE_URL } from "../constant/constant";
 
-export default function Createblog() {
+export default function CreateBlog() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [value, setValue] = useState("");
-
   const [theme, setTheme] = useState("snow");
 
   const handleSubmit = async (e) => {
@@ -66,8 +64,8 @@ export default function Createblog() {
           theme={theme}
           value={content}
           onChange={setContent}
-          modules={Createblog.modules}
-          formats={Createblog.formats}
+          modules={CreateBlog.modules}
+          formats={CreateBlog.formats}
           className="blog-editor"
           placeholder="Write your blog content here..."
         />
@@ -78,36 +76,26 @@ export default function Createblog() {
     </div>
   );
 }
-Createblog.modules = {
+
+CreateBlog.modules = {
   toolbar: [
-    [{ header: "1" }, { header: "2" }, { font: [] }],
-    [{ size: [] }],
-    ["bold", "italic", "underline", "strike", "blockquote"],
-    [
-      { list: "ordered" },
-      { list: "bullet" },
-      { indent: "-1" },
-      { indent: "+1" },
-    ],
-    ["link", "image", "video"],
-    ["clean"],
+    [{ 'font': [] }, { 'size': [] }], // Font and size options
+    [{ 'color': [] }, { 'background': [] }], // Text and background color
+    [{ 'align': [] }], // Text alignment
+    [{ 'header': "1" }, { 'header': "2" }, { 'font': [] }], // Header and font
+    [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }], // Lists and indentation
+    ["bold", "italic", "underline", "strike", "blockquote"], // Text styling
+    ["link", "image", "video"], // Embed media
+    ["undo", "redo"], // Undo/redo
+    ["code-block"], // Code block
+    ["clean"], // Clean formatting
   ],
   clipboard: { matchVisual: false },
 };
-Createblog.formats = [
-  "header",
-  "font",
-  "size",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "bullet",
-  "indent",
-  "link",
-  "image",
-  "video",
+
+CreateBlog.formats = [
+  "header", "font", "size", "bold", "italic", "underline", "strike", "blockquote",
+  "list", "bullet", "indent", "align", "color", "background", "link", "image", "video", "code-block"
 ];
-Createblog.propTypes = { placeholder: PropTypes.string };
+
+CreateBlog.propTypes = { placeholder: PropTypes.string };

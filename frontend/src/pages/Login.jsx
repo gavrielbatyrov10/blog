@@ -16,7 +16,7 @@ export default function Login() {
     e.preventDefault();
     const baseUrl = BASE_URL;
     const loginUrl = `${baseUrl}/auth/login`;
-   
+
     try {
       const response = await fetch(loginUrl, {
         method: "POST",
@@ -29,6 +29,7 @@ export default function Login() {
       const data = await response.json();
       if (response.ok) {
         localStorage.setItem("token", data.token);
+        localStorage.setItem("role", data.user?.role);
         navigate("/");
       } else {
         setError(data.message || "Login failed, please try again.");
