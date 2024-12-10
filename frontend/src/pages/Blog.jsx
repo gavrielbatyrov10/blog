@@ -8,7 +8,36 @@ export default function Blog() {
   const [isLoading, setIsLoading] = useState(true); // Loading state
   const navigate = useNavigate();
 
+
+  const handleDeleteBlog = async (id) => {
+    if (window.confirm("Are you sure you want to delete this blog?")) {
+      try {
+        const response = await fetch(`${BASE_URL}/blog/posts/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to delete the blog.");
+        }
+
+        
+        setBlogs((prevBlogs) => prevBlogs.filter((blog) => blog.id !== id));
+        alert("Blog deleted successfully!");
+      } catch (error) {
+        console.error("Error deleting the blog:", error);
+        alert("An error occurred while deleting the blog.");
+      }
+    }
+  };
+
   useEffect(() => {
+
+    
+// edit
     const fetchBlogs = async () => {
       try {
         const response = await fetch(`${BASE_URL}/blog/posts`, {
@@ -96,6 +125,7 @@ export default function Blog() {
                     </span>
 
                     <button className="edit__btn" onClick={() => navigate(`/blog/edit/${blog.id}`)}>Edit</button>
+                    <button className="edit__btn" onClick={() => handleDeleteBlog(blog.id) }>Delete</button>
                   </>
                 ) : (
                   stripHTML(blog.description)
