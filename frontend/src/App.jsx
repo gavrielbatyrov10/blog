@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Blog from "./pages/Blog";
 import BlogDetails from "./pages/BlogDetails";
 import Createblog from "./pages/CreateBlog";
+import EditBlog from "./pages/EditBlog";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -19,6 +20,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/post/blog" element={<Createblog/>} />
         <Route path="/blog/:id" element={<BlogDetails/>} />
+        <Route path="/blog/edit/:id" element={<EditBlog/>} />
         <Route path="/blog" element={<Blog/>} />
 
       </Routes>

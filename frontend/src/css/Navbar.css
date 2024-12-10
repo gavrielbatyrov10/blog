@@ -1,43 +1,71 @@
-
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+.navbar {  
+  display: flex;  
+  justify-content: space-between;  
+  align-items: center;  
+  padding: 1rem;  
+  background-color: #333;  
+  color: #fff;  
+}  
+  
+.navbar-left {  
+  display: flex;  
+  align-items: center;  
+}  
+  
+.app-name {  
+  font-size: 2rem;  
+  margin-right: 1rem;  
+}  
+  
+.navbar-right {  
+  display: flex;  
+  align-items: center;  
+}  
+  
+.dropdown {  
+  position: relative;  
+  display: inline-block;  
+}  
+  
+.dropbtn {  
+  background-color: #333;  
+  color: #fff;  
+  padding: 10px 20px;  
+  border: none;  
+  border-radius: 5px;  
+  cursor: pointer;  
+}  
+  
+.dropdown-content {  
+  display: none;  
+  position: absolute;  
+  background-color: #333;  
+  min-width: 160px;  
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);  
+  z-index: 1;  
+}  
+  
+.dropdown-content a {  
+  color: #fff;  
+  padding: 12px 16px;  
+  text-decoration: none;  
+  display: block;  
+}  
+  
+.dropdown-content button {  
+  color: #fff;  
+  padding: 12px 16px;  
+  text-decoration: none;  
+  display: block;  
+  border: none;  
+  background-color: #333;  
+  cursor: pointer;  
+}  
+  
+.dropdown:hover .dropdown-content {  
+  display: block;  
+}  
+  
+.dropdown:hover .dropbtn {  
+  background-color: #444;  
 }
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    .app-name {
-    font-size: 24px;
-    font-weight: bold;
-    }
-    .navbar-right {
-    display: flex;
-    gap: 15px;
-    }
-    .navbar-link {
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-    font-weight: 500;
-    transition: color 0.3s;
-    }
-
-.navbar-link--btn {
-    background-color: #4CAF50;
-    color: white;
-}    
-.navbar-link--btn:hover {
-    background-color: white;
-    color: #4CAF50;
-}    
-    .navbar-link:hover {
-    color: #d4d4d4;
-    }

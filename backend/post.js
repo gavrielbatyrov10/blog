@@ -65,7 +65,7 @@ router.put("/posts/:id", authenticate(["admin"]), async (req, res) => {
   const { id } = req.params;
   const { title, description } = req.body;
   const post = await prisma.post.update({
-    where: { id: id },
+    where: { id: parseInt(id) },
     data: { title: title, description: description },
   });
   res.status(200).json(post);

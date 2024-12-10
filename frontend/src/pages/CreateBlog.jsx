@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../css/blog.css";
@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import { BASE_URL } from "../constant/constant";
 
 export default function CreateBlog() {
+  const quillRef = useRef(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
@@ -61,6 +62,8 @@ export default function CreateBlog() {
           Content
         </label>
         <ReactQuill
+        ref={quillRef}
+
           theme={theme}
           value={content}
           onChange={setContent}
@@ -86,7 +89,6 @@ CreateBlog.modules = {
     [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }], // Lists and indentation
     ["bold", "italic", "underline", "strike", "blockquote"], // Text styling
     ["link", "image", "video"], // Embed media
-    ["undo", "redo"], // Undo/redo
     ["code-block"], // Code block
     ["clean"], // Clean formatting
   ],
